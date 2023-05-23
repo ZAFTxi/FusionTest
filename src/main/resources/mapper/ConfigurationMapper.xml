@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nineya.springboot.mapper.ConfigurationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.nineya.springboot.entity.Configuration">
+        <id column="Id" property="id" />
+        <result column="weather" property="weather" />
+        <result column="number" property="number" />
+        <result column="sitetime" property="sitetime" />
+        <result column="generator" property="generator" />
+        <result column="mapselect" property="mapselect" />
+        <result column="algorithm" property="algorithm" />
+        <result column="crossover" property="crossover" />
+        <result column="mutation" property="mutation" />
+
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        Id, weather, number, sitetime, generator, mapselect, algorithm, crossover, mutation
+    </sql>
+
+</mapper>
