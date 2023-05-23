@@ -1,0 +1,126 @@
+{
+  "type": "page",
+  "body": [
+    {
+      "type": "crud",
+      "id": "u:9a08e29ae9fc",
+      "draggable": true,
+      "interval": 5000,
+      "api": "POST:http://127.0.0.1:8080/history/getAll",
+      "columns": [
+        {
+          "name": "id",
+          "label": "ID",
+          "type": "text"
+        },
+        {
+          "name": "Date",
+          "label": "创建时间",
+          "type": "text"
+        },
+        {
+          "label": "用例数量",
+          "name": "Counter",
+          "type": "text",
+          "id": "u:e21dbcfde2e0"
+        },
+        {
+          "type": "text",
+          "label": "碰撞数量",
+          "name": "Crasher",
+          "id": "u:8e3efa9c35ad"
+        },
+        {
+          "type": "text",
+          "label": "融合错误",
+          "name": "Fusionerror",
+          "id": "u:8e3efa9c35ad"
+        },
+        {
+          "type": "text",
+          "label": "执行时间",
+          "name": "Time",
+          "id": "u:8e3efa9c35ad"
+        },
+        {
+          "type": "button",
+          "label": "查看报告",
+          "actionType": "drawer",
+          "drawer": {
+            "title": "报告页面",
+            "body": [
+              {
+                "type": "button",
+                "label": "下载报告",
+                "actionType": "ajax",
+                "api": "POST:http://127.0.0.1:8080/report/download?id=${id}"
+
+              },
+              {
+
+                  "type": "service",
+                  "draggable": true,
+                  "interval": 3000,
+                  "api": "POST:http://127.0.0.1:8080/report/getbyid?id=${id}",
+                  "body": [
+                    {
+                      "type": "table",
+                      "title": " ",
+                      "source": "$rows1",
+                      "columns": [
+                        {
+                          "type": "text",
+                          "name": "segment",
+                          "label": "报告字段"
+                        },
+                        {
+                          "type": "text",
+                          "name": "value",
+                          "label": "数值"
+                        }
+                      ],
+                      "id": "u:3d7573274ad2"
+                    }
+                  ]
+                }
+                ]
+                }
+              },
+
+              {
+                "type": "operation",
+                "label": "操作",
+                "name": "delete",
+                "id": "u:b269163f9087",
+                "buttons": [
+                  {
+                    "label": "删除",
+                    "type": "button",
+                    "actionType": "ajax",
+                    "level": "danger",
+                    "confirmText": "该记录会被删除，点击确认",
+                    "api": "POST:http://127.0.0.1:8080/history/delete?id=${id}"
+                  }
+                ]
+              },
+              {
+                "type": "mapping",
+                "label": "状态",
+                "name": "status",
+                "map": {
+                  "1": "<span class='label label-info'>就绪</span>",
+                  "2": "<span class='label label-success'>已完成</span>",
+                  "3": "<span class='label label-warning'>执行中</span>"
+                },
+                "id": "u:805eebd0c1f5"
+              }
+            ]
+            }
+          ],
+          "id": "u:b45d373abd1d",
+          "style": {},
+          "regions": [
+            "body",
+            "header"
+          ]
+        }

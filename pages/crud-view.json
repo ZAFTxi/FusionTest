@@ -1,0 +1,115 @@
+{
+  "type": "page",
+  "title": "查看详情 ${params.id}",
+  "remark": null,
+  "toolbar": [
+    {
+      "type": "button",
+      "actionType": "link",
+      "link": "/crud/list",
+      "label": "返回列表"
+    }
+  ],
+  "body": [
+    {
+      "type": "form",
+      "initApi": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/${params.id}",
+      "controls": [
+        {
+          "type": "static",
+          "name": "engine",
+          "label": "Engine"
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "static",
+          "name": "browser",
+          "label": "Browser"
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "static",
+          "name": "platform",
+          "label": "Platform(s)"
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "static",
+          "name": "version",
+          "label": "Engine version"
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "static",
+          "name": "grade",
+          "label": "CSS grade"
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "html",
+          "html": "<p>添加其他 <span>Html 片段</span> 需要支持变量替换（todo）.</p>"
+        },
+        {
+          "type": "operation",
+          "label": "操作",
+          "name": "report",
+          "id": "u:36e1ae40d0e8",
+          "buttons": [
+            {
+              "type": "button",
+              "label": "查看报告",
+              "actionType": "drawer",
+              "drawer": {
+                "title": "报告页面",
+                "body": [
+                  {
+                    "type": "button",
+                    "label": "下载报告",
+                    "actionType": "ajax",
+                    "api": "POST:http://127.0.0.1:8080/history/report"
+
+                  },
+                  {
+                    "type": "service",
+                    "id": "table2",
+                    "api": "POST:http://127.0.0.1:8080/report/getbyid?id=${id}"
+                    "body":[
+                    {
+                      "type": "table",
+                      "title": " ",
+                      "source": "$rows",
+                      "columns": [
+                        {
+                          "type": "text",
+                          "name": "segment",
+                          "label": "报告字段"
+                        },
+                        {
+                          "type": "text",
+                          "name": "value",
+                          "label": "数值"
+                        }
+                      ],
+                      "id": "u:6bc9ef1b51f4"
+                      }
+                    ]
+                  }
+                  }
+                ]
+                }
+                ]
+              },
+      ]
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "type": "page",
+  "title": " ",
+  "body":[
+    {
+      "type": "crud",
+      "draggable": true,
+      "interval": 5000,
+      "id": "form_data",
+      "api": "POST:http://127.0.0.1:8080/result/getAll",
+      "syncLocation": false,
+      "columns": [
+      {
+        "name": "a",
+        "label": "ID",
+        "type": "text",
+        "id": "u:7a5fb3758bc0",
+        "inline": true
+      },
+      {
+        "type": "text",
+        "name": "b",
+        "id": "u:7ce3305a32a8",
+        "placeholder": "-",
+        "label": "用例总数",
+        "inline": true
+      },
+      {
+        "name": "b",
+        "label": "碰撞数量",
+        "type": "text",
+        "id": "u:3d0d2fac14ef",
+        "placeholder": "-",
+        "inline": true
+      },
+      {
+        "type": "text",
+        "name": "d",
+        "id": "u:7ce3305a32",
+        "placeholder": "-",
+        "label": "融合错误",
+        "inline": true
+      }
+
+    ],
+    "bulkActions": [
+    ],
+    "itemActions": [
+    ],
+    "id": "u:12f7b6e607d5"
+  },
+
+  {
+      "type": "progress",
+      "draggable": true,
+      "interval": 2000,
+      "value": 100,
+      "strokeWidth": 6,
+      "id": "u:530baa2cd6cd",
+      "label": "测试进度",
+      "placeholder": "-",
+      "progressClassName": "w-md",
+      "interval": 2000,
+      "step": 1,
+      "max": 100,
+      "Finish": "alert('Progress finished!')",
+      "fixed": ""
+
+  },{
+    "type": "button",
+    "label": "可视化",
+
+      "actionType": "ajax",
+      "api": "POST:http://127.0.0.1:8080/visual/getdata",
+      "id": "u:858d63a74711"
+
+  },
+  {
+      "type": "service",
+      "id": "chart2",
+      "body": {
+        "type": "chart",
+        "api": "POST:http://127.0.0.1:8080/visual/getdata",
+        "config": {
+
+          "title": {
+            "text": "Sensor Data"
+          },
+          "legend": {
+            "data": [
+                "radar","camera","fusion"
+              ]
+            },
+          "tooltip": {
+            "trigger": "axis",
+            "axisPointer": {
+              "type": "cross"
+            }
+          },
+          "xAxis": {
+            "type": "category",
+            "axisTick": {
+            "show": false
+                }
+          },
+          "yAxis": {
+            "type": "value"
+          },
+
+
+          "series":[
+            {
+              "type": "line",
+              "name": "camera",
+              "showSymbol": false,
+              "seriesLayoutBy": "row",
+              "data":"${line1}",
+              "animationDuration": 180000
+            },
+            {
+              "type": "line",
+              "name": "radar",
+              "showSymbol": false,
+              "seriesLayoutBy": "row",
+              "data": "${line2}",
+              "animationDuration": 180000
+            },
+            {
+              "type": "line",
+              "name": "fusion",
+              "showSymbol": false,
+              "data": "${line3}",
+              "animationDuration": 180000
+            }
+          ]
+
+        },
+        "clickAction": {
+          "actionType": "dialog",
+          "dialog": {
+            "title": "详情",
+            "body": [
+              {
+                "type": "tpl",
+                "tpl": "<span>当前选中值 ${value|json}<span>"
+              }
+            ]
+          }
+        }
+
+
+      }
+
+    }
+  ]
+}
