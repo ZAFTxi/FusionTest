@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>居中的标题</title>
+	<style>
+		.center {
+			text-align: center;
+		}
+		h1 {
+			font-size: 36px;
+			font-weight: bold;
+			color: #333;
+			margin-top: 50px;
+		}
+	</style>
+</head>
+<body>
+	<div class="center">
+		<h1>FusionTest可视化界面</h1>
+	</div>
+</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>ECharts</title>
+    <!-- 引入刚刚下载的 ECharts 文件 -->
+    <!-- <script src='https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js'></script> -->
+    <script src="echarts.js"></script>
+  </head>
+  <body>
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="main" style="margin-right: 20px;width: 800px;height:600px;float: left;"></div>
+    <script type="text/javascript">
+      // 基于准备好的dom，初始化echarts实例
+      // var ROOT_PATH = 'https://echarts.apache.org/examples';
+
+      // var ROOT_PATH = 'https://echarts.apache.org/examples';
+      var chartDom = document.getElementById('main');
+      var myChart = echarts.init(chartDom);
+var option;
+// var data1 = data;
+
+
+ run();
+
+
+
+function run() {
+  const sensors = [
+    'camera',
+    'radar',
+    'fusion'
+  ];
+  const datasetWithFilters = [];
+  const seriesList = [];
+  echarts.util.each(sensors, function (sensor) {
+    var datasetId = 'dataset_' + sensor;
+    datasetWithFilters.push({
+      id: datasetId,
+      fromDatasetId: 'dataset_raw',
+      transform: {
+        type: 'filter',
+        config: {
+          and: [
+            { dimension: 'time', gte: 0.1 },
+            { dimension: 'sensor', '=': sensor }
+          ]
+        }
+      }
+    });
+    seriesList.push({
+      type: 'line',
+      datasetId: datasetId,
+      showSymbol: false,
+      name: sensor,
+      endLabel: {
+        show: true,
+        formatter: function (params) {
+          return params.value[0] + ': ' + params.value[1];
+        }
+      },
+      labelLayout: {
+        moveOverlap: 'shiftY'
+      },
+      emphasis: {
+        focus: 'series'
+      },
+      encode: {
+        x: 'time',
+        y: 'distance',
+        label: ['Sensor', 'distance'],
+        itemName: 'time',
+        tooltip: ['distance']
+      }
+    });
+  });
+  option = {
+    animationDuration: 10000,
+    dataset: [
+      {
+        id: 'dataset_raw',
+      source:
+        [
+          ["sensor","distance","time"],
+  [
+    "camera",
+    12.1,
+    0.1
+  ],
+  [
+    "radar",
+    10.1,
+    0.1
+  ],
+  [
+    "camera",
+    11.5,
+    0.6
+  ],
+  [
+    "camera",
+    10,
+    1
+  ],
+  [
+    "camera",
+    9.5,
+    1.5
+  ],
+  [
+    "camera",
+    8.4,
+    2
+  ],
+  [
+    "camera",
+    7.2,
+    2.5
+  ],
+  [
+    "camera",
+    6.8,
+    3
+  ],
+  [
+    "camera",
+    8.3,
+    3.5
+  ],
+  [
+    "camera",
+    8.5,
+    4
+  ],
+  [
+    "camera",
+    7.5,
+    4.5
+  ],
+  [
+    "camera",
+    7.2,
+    5
+  ],
+  [
+    "camera",
+    7.3,
+    5.5
+  ],
+  [
+    "camera",
+    7.6,
+    6
+  ],
+  [
+    "camera",
+    7.8,
+    6.5
+  ],
+  [
+    "camera",
+    7.9,
+    7
+  ],
+  [
+    "camera",
+    8,
+    7.5
+  ],
+  [
+    "camera",
+    7.5,
+    8
+  ],
+  [
+    "camera",
+    7.3,
+    8.5
+  ],
+  [
+    "camera",
+    7.1,
+    9
+  ],
+  [
+    "camera",
+    6.8,
+    9.5
+  ],
+  [
+    "camera",
+    6.6,
+    10
+  ],
+  [
+    "camera",
+    6.7,
+    10.5
+  ],
+  [
+    "camera",
+    6.8,
+    11
+  ],
+  [
+    "camera",
+    6.9,
+    11.5
+  ],
+  [
+    "camera",
+    7,
+    12
+  ],[
+    "camera",
+    7.1,
+    12.5
+  ],[
+    "camera",
+    7.2,
+    13
+  ],
+  [
+    "camera",
+    7.3,
+    13.5
+  ],
+  [
+    "camera",
+    7.5,
+    14
+  ],
+  [
+    "camera",
+    7.6,
+    14.5
+  ],
+  [
+    "camera",
+    7.4,
+    15
+  ],
+  [
+    "camera",
+    7.2,
+    15.5
+  ],
+  [
+    "camera",
+    7.1,
+    16
+  ],
+  [
+    "camera",
+    6.9,
+    16.5
+  ],
+  [
+    "camera",
+    6.8,
+    17
+  ],
+  [
+    "camera",
+    5.5,
+    17.5
+  ],
+  [
+    "camera",
+    7.5,
+    18
+  ],
+  [
+    "camera",
+    7.8,
+    18.5
+  ],
+  [
+    "camera",
+    7.9,
+    19
+  ],
+  [
+    "camera",
+    7.9,
+    19.5
+  ],
+  [
+    "camera",
+    8.1,
+    20
+  ],
+  ["radar",12.1,0.1],["radar",8.3,0.6],["radar",8.2,1],["radar",8,1.5],["radar",7.5,2],["radar",6.8,2.5],["radar",6.4,3],
+  ["radar",5.3,3.5],["radar",5.5,4],["radar",4.5,4.5],["radar",4.3,5],["radar",4.2,5.5],["radar",4.3,6],["radar",4.6,6.5],
+  ["radar",4.8,7],["radar",5,7.5],["radar",5.2,8],["radar",4.8,8.5],["radar",4.6,9],["radar",4.1,9.5],["radar",3.8,10],
+  ["radar",4,10.5],["radar",3.7,11],["radar",3.8,11.5],["radar",3.9,12],["radar",4,12.5],["radar",4.1,13],["radar",4.2,13.5],
+  ["radar",4.1,14],["radar",4.2,14.5],["radar",4.5,15],["radar",4.6,15.5],["radar",4.7,16],["radar",4.1,16.5],["radar",3.9,17],
+  ["radar",3.7,17.5],["radar",3.8,18],["radar",3.5,18.5],["radar",5.3,19],["radar",5.5,19.5],["radar",5.7,20],
+  ["fusion",12.1,0.1],["fusion",10,0.6],["fusion",11.4,1],["fusion",9.8,1.5],["fusion",9.3,2],["fusion",8,2.5],["fusion",7.1,3],
+  ["fusion",6.7,3.5],["fusion",8.2,4],["fusion",8.5,4.5],["fusion",7,5],["fusion",7.1,5.5],["fusion",7.2,6],["fusion",7.4,6.5],
+  ["fusion",7.6,7],["fusion",7.7,7.5],["fusion",7.7,8],["fusion",7,8.5],["fusion",6.9,9],["fusion",6.8,9.5],["fusion",6.5,10],
+  ["fusion",6.3,10.5],["fusion",6.4,11],["fusion",6.8,11.5],["fusion",6.9,12],["fusion",7,12.5],["fusion",4.1,13],["fusion",4.2,13.5],
+  ["fusion",4.1,14],["fusion",7.5,14.5],["fusion",7.6,15],["fusion",7.3,15.5],["fusion",7.1,16],["fusion",7,16.5],["fusion",6.8,17],
+  ["fusion",6.7,17.5],["fusion",5.5,18],["fusion",7.5,18.5],["fusion",7.6,19],["fusion",7.7,19.5],["fusion",7.7,20]
+  ]
+
+    },
+    ...datasetWithFilters
+    ],
+    title: {
+      text: 'Sensor Data'
+    },
+    tooltip: {
+      order: 'valueDesc',
+      trigger: 'axis'
+    },
+    xAxis: {
+      type: 'category',
+      nameLocation: 'middle'
+    },
+    yAxis: {
+      name: 'distance'
+    },
+    grid: {
+      right: 140
+    },
+    series: seriesList
+  };
+  myChart.setOption(option);
+}
+
+option && myChart.setOption(option);
+    </script>
+  </body>
+  </body>
+  <div id="main1" style="margin-right: 20px;width: 800px;height:650px;float: right;"></div>
+<!-- <div class="chart-container"> -->
+   <!-- <img src="chart1.png" alt="Chart 1"> -->
+<!-- </div> -->
+
+  <script type="text/javascript">
+  var chartDom = document.getElementById('main1');
+var myChart = echarts.init(chartDom);
+var option;
+
+const gaugeData = [
+{
+  value: 0,
+  name: 'TestNum',
+  title: {
+    offsetCenter: ['0%', '-30%']
+  },
+  detail: {
+    valueAnimation: true,
+    offsetCenter: ['0%', '-20%']
+  }
+},
+{
+  value: 0,
+  name: 'Crash',
+  title: {
+    offsetCenter: ['0%', '0%']
+  },
+  detail: {
+    valueAnimation: true,
+    offsetCenter: ['0%', '10%']
+  }
+},
+{
+  value: 0,
+  name: 'Fusion',
+  title: {
+    offsetCenter: ['0%', '30%']
+  },
+  detail: {
+    valueAnimation: true,
+    offsetCenter: ['0%', '40%']
+  }
+}
+];
+option = {
+  title: {
+    text: 'Fusion Counter'
+  },
+series: [
+
+  {
+    type: 'gauge',
+    startAngle: 90,
+    endAngle: -270,
+    pointer: {
+      show: false
+    },
+    progress: {
+      show: true,
+      overlap: false,
+      roundCap: true,
+      clip: false,
+      itemStyle: {
+        borderWidth: 1,
+        borderColor: '#464646'
+      }
+    },
+
+    axisLine: {
+      lineStyle: {
+        width: 40
+      }
+    },
+    splitLine: {
+      show: false,
+      distance: 0,
+      length: 10
+    },
+    axisTick: {
+      show: false
+    },
+    axisLabel: {
+      show: false,
+      distance: 50
+    },
+    data: gaugeData,
+    title: {
+      fontSize: 14
+    },
+    detail: {
+      width: 50,
+      height: 14,
+      fontSize: 14,
+      color: 'inherit',
+      borderColor: 'inherit',
+      borderRadius: 20,
+      borderWidth: 1,
+      formatter: '{value}%'
+    }
+  }
+]
+};
+setInterval(function () {
+gaugeData[0].value = 100;
+gaugeData[1].value = 0;
+gaugeData[2].value = 0;
+myChart.setOption({
+  series: [
+    {
+      data: gaugeData,
+      pointer: {
+        show: false
+      }
+    }
+  ]
+});
+}, 10000);
+
+option && myChart.setOption(option);
+  </script>
+</body>
+
+</body>
+    <span id="text-with-number">
+      <pre>
+        测试用例：0
+        碰撞数量：0
+        融合错误：0
+      </pre>
+    </span>
+    <script src="shownum_function.js"></script>
+</body>
+
+
+</html>

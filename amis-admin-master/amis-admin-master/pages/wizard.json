@@ -1,0 +1,157 @@
+120, 200, 150, 80, 70, 110, 130
+80, 150, 100, 120, 90, 70, 100
+
+"draggable": true,
+"interval": 5000,
+
+,
+{
+  "type": "line",
+  "name": "折线2",
+  "showSymbol": false,
+  "seriesLayoutBy": "row2",
+  "animationDuration": 10000
+}
+
+{
+  "type": "progress",
+  "value": 0,
+  "strokeWidth": 6,
+  "id": "u:530baa2cd6cd",
+  "label": "测试进度",
+  "placeholder": "-",
+  "progressClassName": "w-md",
+  "interval": 2000,
+  "step": 1,
+  "max": 100,
+  "Finish": "alert('Progress finished!')",
+  "fixed": ""
+}
+
+
+"clickAction": {
+  "actionType": "dialog",
+  "dialog": {
+    "title": "详情",
+    "body": [
+      {
+        "type": "tpl",
+        "tpl": "<span>当前选中值 ${value|json}<span>"
+      }
+    ]
+  }
+}
+
+"tooltip": {
+  "trigger": "axis",
+  "axisPointer": {
+    "type": "cross"
+  }
+},
+
+
+{
+  "type": "page",
+  "title": "表单向导",
+  "subTitle": "可以通过表单向导，将一个超长的表单页面拆分成多个步骤，一步一步指引用户完成。",
+  "body": [
+    {
+      "type": "wizard",
+      "actionFinishLabel": "确认",
+      "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/saveWizard",
+      "steps": [
+        {
+          "title": "填写活动信息",
+          "controls": [
+            {
+              "type": "text",
+              "name": "title",
+              "label": "活动标题",
+              "required": true,
+              "size": "md"
+            },
+
+            {
+              "type": "date",
+              "name": "date",
+              "label": "举办时间",
+              "size": "md"
+            },
+
+            {
+              "type": "number",
+              "name": "num",
+              "label": "参与人数",
+              "value": 10,
+              "size": "md"
+            }
+          ]
+        },
+
+        {
+          "title": "填写赞助商信息",
+          "controls": [
+            {
+              "type": "text",
+              "name": "company",
+              "label": "公司名称",
+              "required": true,
+              "size": "md"
+            },
+
+            {
+              "type": "text",
+              "name": "money",
+              "label": "赞助金额",
+              "addOn": {
+                "type": "text",
+                "label": "￥"
+              },
+              "size": "md"
+            }
+          ]
+        },
+
+        {
+          "title": "确认",
+          "mode": "horizontal",
+          "horizontal": {
+            "leftFixed": "sm"
+          },
+          "controls": [
+            {
+              "type": "static",
+              "name": "company",
+              "label": "活动标题",
+              "labelClassName": "text-muted"
+            },
+            {
+              "type": "static-date",
+              "name": "date",
+              "label": "举办时间",
+              "labelClassName": "text-muted"
+            },
+            {
+              "type": "static",
+              "name": "num",
+              "label": "参与人数",
+              "labelClassName": "text-muted"
+            },
+            {
+              "type": "static",
+              "name": "company",
+              "label": "公司名称",
+              "labelClassName": "text-muted"
+            },
+            {
+              "type": "static",
+              "name": "money",
+              "label": "赞助金额",
+              "labelClassName": "text-muted"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

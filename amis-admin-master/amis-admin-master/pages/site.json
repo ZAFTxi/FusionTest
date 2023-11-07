@@ -1,0 +1,38 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "pages": [
+      {
+        "label": "Home",
+        "url": "/",
+        "redirect": "/index/1"
+      },
+      {
+        "label": "功能列表",
+        "children": [
+          {
+            "label": "配置清单",
+            "url": "index",
+            "icon": "fa fa-cube",
+            "schemaApi": "get:/pages/configuration.json"
+          },
+          {
+            "label": "融合结果",
+            "icon": "fa fa-cube",
+            "schemaApi": "get:/pages/result.json"
+
+          },
+          {
+           "label": "历史记录",
+             "icon": "fa fa-cube",
+             "schemaApi": "get:/pages/history.json"
+
+           }
+
+
+        ]
+      }
+    ]
+  }
+}

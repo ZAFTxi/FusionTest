@@ -1,0 +1,209 @@
+{
+  "type": "page",
+  "title": " ",
+  "body": [
+    {
+      "title": "",
+      "actions": [
+        {
+          "label": "提交任务",
+          "type": "submit",
+          "level": "success"
+        }
+      ],
+      "body": [
+        {
+          "type": "fieldSet",
+          "title": "基本配置",
+          "body": [
+            {
+              "type": "radios",
+              "label": "执行模式",
+              "name": "mode",
+              "options": [
+                {
+                  "label": "单次执行",
+                  "value": "onetime"
+                },
+                {
+                  "label": "批量执行",
+                  "value": "multi_exec"
+                }
+              ],
+              "required": true,
+              "id": "u:6cad4f374303"
+            },
+            {
+              "type": "select",
+              "label": "地图选择",
+              "name": "mapselect",
+              "options": [
+                {
+                  "label": "Town06_Opt_forward",
+                  "value": "Town06_Opt_forward"
+                },
+                {
+                  "label": "Town04_Opt_forward_highway",
+                  "value": "Town04_Opt_forward_highway"
+                },
+                {
+                  "label": "Town04_Opt_left_highway",
+                  "value": "Town04_Opt_left_highway"
+                }
+              ],
+              "id": "u:c96941d0fe9b",
+              "multiple": false,
+              "size": "md",
+              "required": true
+            },
+            {
+              "type": "radios",
+              "label": "融合算法",
+              "name": "algorithm",
+              "options": [
+                {
+                  "label": "Origin",
+                  "value": "origin"
+                },
+                {
+                  "label": "Mathwork",
+                  "value": "mathwork"
+                }
+              ],
+              "required": true,
+              "id": "u:b7e8a7c87848"
+            },
+            {
+              "type": "radios",
+              "label": "交叉算子",
+              "name": "crossover",
+              "options": [
+                {
+                  "label": "单点交叉",
+                  "value": "Single-point-crossover"
+                },
+                {
+                  "label": "多点交叉",
+                  "value": "Multi-point-crossover"
+                },
+                {
+                  "label": "模拟二进制交叉",
+                  "value": "Simulated-binary-crossover"
+                }
+              ],
+              "required": true,
+              "id": "u:b7e8a7c87844"
+            },
+            {
+              "type": "radios",
+              "label": "突变算子",
+              "name": "mutation",
+              "options": [
+                {
+                  "label": "多项式突变",
+                  "value": "Polynomial-mutation"
+                },
+                {
+                  "label": "高斯突变",
+                  "value": "Gaussian-mutation"
+                },
+                {
+                  "label": "非一致突变",
+                  "value": "Non-uniform-mutation"
+                }
+              ],
+              "required": true,
+              "id": "u:b7e8a7c87845"
+            },
+            {
+              "type": "input-range",
+              "label": "子代数量",
+              "name": "number",
+              "multiple": false,
+              "value": 1,
+              "min": 1,
+              "max": 100,
+              "step": 1,
+              "unit": "times",
+              "tooltipPlacement": "auto",
+              "showInput": false,
+              "parts": 1,
+              "showSteps": false,
+              "marks": {
+              },
+              "size": "lg",
+              "required": true,
+              "id": "u:004484308984"
+            },
+            {
+              "type": "input-range",
+              "label": "Generation Nums",
+              "name": "generator",
+              "id": "u:e44fe00d474e",
+              "placeholder": "-",
+              "fixed": "",
+              "width": -1,
+              "multiple": false,
+              "value": 1,
+              "min": 1,
+              "max": 20,
+              "step": 1,
+              "unit": "",
+              "tooltipPlacement": "auto",
+              "showInput": false,
+              "parts": 1,
+              "showSteps": false,
+              "marks": {
+              },
+              "size": "lg",
+              "required": true
+            },
+            {
+              "type": "input-range",
+              "label": "片段时间",
+              "name": "sitetime",
+              "id": "u:e44fe00d474e",
+              "placeholder": "-",
+              "fixed": "",
+              "width": -1,
+              "multiple": false,
+              "value": 200,
+              "min": 150,
+              "max": 200,
+              "step": 10,
+              "unit": "",
+              "tooltipPlacement": "auto",
+              "showInput": false,
+              "parts": 1,
+              "showSteps": false,
+              "marks": {
+              },
+              "size": "lg"
+            }
+     ]
+   }
+ ],
+ "type": "form",
+      "mode": "horizontal",
+      "affixFooter": true,
+      "panelClassName": "Panel--default",
+      "bodyClassName": "text-lg",
+      "api": {
+        "url": "http://127.0.0.1:8080/configuration",
+        "method": "post",
+        "data": {
+          "sitetime": "${sitetime}",
+          "generator": "${generator}",
+          "switch": "${switch}",
+          "weather": "${weather}",
+          "mapselect": "${mapselect}",
+          "number": "${number}",
+          "mode": "${mode}",
+          "algorithm":"${algorithm}",
+          "cross":"${cross}",
+          "mutation":"${mutation}"
+        }
+      }
+    }
+  ]
+}
