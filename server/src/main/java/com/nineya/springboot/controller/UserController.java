@@ -20,6 +20,31 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Jacky_xi
  * @since 2023-05-12
  */
+
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class LoginController {
+
+    @GetMapping("/login")
+    public String login() {
+        // 这里只是一个示例，实际的登录逻辑会更复杂
+        return "Please login with a username and password.";
+    }
+
+    @GetMapping("/authenticate")
+    public String authenticate() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() != null) {
+            return "Authenticated user: " + authentication.getName();
+        }
+        return "Not authenticated";
+    }
+}
 @RestController
 @RequestMapping("/user")
 public class UserController {

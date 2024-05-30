@@ -72,3 +72,4 @@ public class Result implements Serializable {
         this.fusionerror = fusionerror;
     }
 }
+

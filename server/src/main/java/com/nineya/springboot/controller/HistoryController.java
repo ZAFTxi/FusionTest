@@ -74,12 +74,6 @@ public class HistoryController {
     public R DeleteById(HttpServletRequest req, HttpSession session) throws IOException, InterruptedException {
         String Id = req.getParameter("id");
         historyService.deleteById(Id);
-        try {
-            //使当前线程休眠4秒
-            Thread.sleep(4000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         return R.success("删除成功");
     }
 
