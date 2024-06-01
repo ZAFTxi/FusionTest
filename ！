@@ -1,0 +1,25 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Your branch is up to date with 'origin/main'.
+#
+# Changes to be committed:
+#	modified:   FuseTools/README.md
+#	modified:   server/.idea/misc.xml
+#	new file:   server/Dockerfile
+#	modified:   server/pom.xml
+#	modified:   server/src/main/java/com/nineya/springboot/SpringbootApplication.java
+#	new file:   server/src/main/java/com/nineya/springboot/Tools/CodeGenerator.java
+#	new file:   server/src/main/java/com/nineya/springboot/Tools/WebSocketConfig.java
+#	modified:   server/src/main/java/com/nineya/springboot/controller/HistoryController.java
+#	modified:   server/src/main/java/com/nineya/springboot/controller/UserController.java
+#	modified:   server/src/main/java/com/nineya/springboot/controller/VisualController.java
+#	modified:   server/src/main/java/com/nineya/springboot/entity/History.java
+#	modified:   server/src/main/java/com/nineya/springboot/entity/Result.java
+#	new file:   server/src/main/java/com/nineya/springboot/kafkatools/KafkaConsumer.java
+#	new file:   server/src/main/java/com/nineya/springboot/kafkatools/KafkaSparkApplication.java
+#	modified:   server/src/main/java/com/nineya/springboot/mapper/ConfigurationMapper.java
+#	modified:   server/target/classes/application.properties
+#	modified:   server/target/classes/application.yml

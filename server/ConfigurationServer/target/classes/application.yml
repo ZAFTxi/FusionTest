@@ -1,0 +1,38 @@
+server:
+  port: 8080  #配置本服务器的端口为8080
+spring:
+  #数据库连接配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?serverTimezone=Asia/Shanghai
+    username: admin
+    password: admin
+
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 1024MB
+
+#mybatis的相关配置
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.nineya.springboot.entity
+  #开启驼峰命名
+  configuration:
+    map-underscore-to-camel-case: false
+
+
+#redis配置
+spring:
+  redis:
+    host: localhost
+    port: 6379
+    password:  123456
+    database: 0
+    jedis:
+    pool:
+    max-active: 8
+    max-idle: 8
+    min-idle: 0
+    max-wait: -1ms

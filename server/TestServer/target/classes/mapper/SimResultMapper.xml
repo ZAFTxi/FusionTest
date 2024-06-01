@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nineya.springboot.mapper.SimResultMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.nineya.springboot.entity.SimResult">
+        <id column="id" property="id" />
+        <result column="tesk_id" property="teskId" />
+        <result column="priority_queue_size" property="priorityQueueSize" />
+        <result column="init_population_size" property="initPopulationSize" />
+        <result column="sampling" property="sampling" />
+        <result column="loops_num" property="loopsNum" />
+        <result column="fitness_function" property="fitnessFunction" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, tesk_id, priority_queue_size, init_population_size, sampling, loops_num, fitness_function
+    </sql>
+
+</mapper>

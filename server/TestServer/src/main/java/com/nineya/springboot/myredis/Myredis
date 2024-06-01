@@ -1,0 +1,148 @@
+import org.springframework.cache.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.Resource;
+import java.time.Duration;
+
+@Service
+public class DepartmentServiceImpl implements DepartmentService {
+    @Resource
+    private DepartmentDAO departmentDAO;
+    @Resource
+    private RedisTemplate redisTemplate;
+
+    @Override
+    public List<Department> findAll() {
+        // json处理的对象
+        ObjectMapper mapper = new ObjectMapper();
+        // 1、查询缓存
+        // 定义一个key（唯一、尽量不会被推导）
+        // 使用一个唯一的名字 + 参数值 + md5
+        String key = MD5Utils.md5("findAllDepartments");
+        // 得到redisTemplate中的操作对象
+        BoundValueOperations<String, String> boundValueOps = redisTemplate.boundValueOps(key);
+        // 得到缓存中的值
+        String value = boundValueOps.get();
+        System.out.println("value===" + value);
+        // 2、判断缓存是否有该数据
+        if (value != null){
+            // 3、如果有则返回该数据
+            System.out.println("查询缓存");
+            List<Department> list = null;
+            try {
+                list = mapper.readValue(value, new TypeReference<List<Department>>(){});
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return list;
+        }else{
+            // 4、如果没有，则去数据库中查询，并保存到缓存中
+            System.out.println("查询数据库");
+            List<Department> departments = departmentDAO.findAll();
+            if (departments != null && departments.size() > 0){
+                // 转换成json格式
+                try {
+                    String string = mapper.writeValueAsString(departments);
+                    // 保存到缓存中
+                    boundValueOps.set(string);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            return departments;
+        }
+    }
+}
+
+
+
+@Configuration // 配置文件
+@EnableCaching // 允许缓存使用，开启缓存的配置，需要继承CachingConfigurerSupport类
+public class MyRedisConfig extends CachingConfigurerSupport {
+    @Bean
+    public CacheManager cacheManager(RedisConnectionFactory factory){
+        RedisSerializer<String> keyRedisSerializer = new StringRedisSerializer(); // redis的key序列化方式
+        Jackson2JsonRedisSerializer valueRedisSerializer = new Jackson2JsonRedisSerializer(Object.class); // redis的value的序列化
+
+        //解决查询缓存转换异常的问题
+        ObjectMapper om = new ObjectMapper();
+        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        valueRedisSerializer.setObjectMapper(om);
+
+        //配置序列化(解决乱码的问题)
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ZERO) // 默认生存时间
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(keyRedisSerializer))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(valueRedisSerializer))
+                .disableCachingNullValues();
+
+        //缓存配置map
+        Map<String,RedisCacheConfiguration> cacheConfigurationMap=new HashMap<>();
+        //自定义缓存名，后面使用的@Cacheable的CacheName
+        cacheConfigurationMap.put("myRedis",config);
+//        cacheConfigurationMap.put("default",config);
+
+        RedisCacheManager cacheManager = RedisCacheManager.builder(factory)
+                .cacheDefaults(config)
+                .withInitialCacheConfigurations(cacheConfigurationMap)
+                .build();
+
+        return cacheManager;
+    }
+
+    @Bean
+    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
+        StringRedisTemplate template = new StringRedisTemplate(factory);
+        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+        ObjectMapper om = new ObjectMapper();
+        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        jackson2JsonRedisSerializer.setObjectMapper(om);
+        template.setValueSerializer(jackson2JsonRedisSerializer);
+        template.afterPropertiesSet();
+        return template;
+    }
+}
+
+@Service
+public class SensorServiceImpl implements SensorService {
+    @Resource
+    private SensorDAO SensorDAO;
+
+    @Override
+    public List<Sensor> findAll() {
+        return SensoreDAO.findAll();
+    }
+
+    @Override
+    @Cacheable(value = "Sensor:info", key = "T(com.qf.sbems.utils.MD5Utils).md5('SensorService_findById' + #id)"
+            , depict = "用户信息缓存", enableFirstCache = true,
+            firstCache = @FirstCache(expireTime = 400, timeUnit = TimeUnit.SECONDS),
+            secondaryCache = @SecondaryCache(expireTime = 1000, preloadTime = 200,
+                    forceRefresh = true, timeUnit = TimeUnit.SECONDS, isAllowNullValue = true, magnification = 100))
+    public Sensor findById(Integer id) {
+        System.out.println("查询数据库");
+        return SensoreDAO.findById(id);
+    }
+
+    @Override
+    @CachePut(value = "Sensor:info", key = "T(com.qf.sbems.utils.MD5Utils).md5('SensorService_findById' + #id)"
+            , depict = "传感器信息缓存", enableFirstCache = true,
+            firstCache = @FirstCache(expireTime = 400, timeUnit = TimeUnit.SECONDS),
+            secondaryCache = @SecondaryCache(expireTime = 1000, preloadTime = 200,
+                    forceRefresh = true, timeUnit = TimeUnit.SECONDS, isAllowNullValue = true, magnification = 100))
+    public Sensor update(Sensor sensor) {
+        sensor.setUpdatetime(new Date());
+        SensorDAO.update(sensor);
+        return findById(sensor.getId());
+    }
+
+    @CacheEvict(value = "Sensor:info", key = "T(com.qf.sbems.utils.MD5Utils).md5('SensorService_findById' + #id)")
+    public void delete(Integer id) {
+//        SensorDAO.delete(id);
+    }
+}
+
+
